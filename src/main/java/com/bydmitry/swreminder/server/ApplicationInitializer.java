@@ -1,5 +1,6 @@
 package com.bydmitry.swreminder.server;
 
+
 import com.bydmitry.swreminder.server.config.WebConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -10,21 +11,17 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-/**
- * Created by Dmitry on 11.01.2016.
- */
-public class ApplicationInitializer implements WebApplicationInitializer{
+public class ApplicationInitializer implements WebApplicationInitializer {
+
     private final static String DISPATCHER = "dispatcher";
 
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
         ctx.register(WebConfig.class);
-
         servletContext.addListener(new ContextLoaderListener(ctx));
 
-        ServletRegistration.Dynamic servlet = servletContext.addServlet(DISPATCHER,new DispatcherServlet(ctx));
+        ServletRegistration.Dynamic servlet = servletContext.addServlet(DISPATCHER, new DispatcherServlet(ctx));
         servlet.addMapping("/");
         servlet.setLoadOnStartup(1);
-
     }
 }
